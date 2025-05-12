@@ -13,6 +13,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,25 +24,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "users")
 @Builder
-public class User implements UserDetails{
+public class User implements UserDetails {
 	@Id
 	@GeneratedValue
 	private Long id;
 	private String firstname;
 	private String lastname;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
 	private String password;
 	private String profileImg;
 	@Enumerated(EnumType.STRING)
 	private Role role;
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of(new SimpleGrantedAuthority(role.name()));
 	}
-	
+
 	@Override
 	public String getUsername() {
 		return email;

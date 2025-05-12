@@ -4,9 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.traderbuddy.auth.requestTypes.AuthenticationRequest;
+import com.traderbuddy.auth.config.JwtService;
+import com.traderbuddy.auth.dto.request.AuthenticationRequest;
 import com.traderbuddy.auth.user.UserRepository;
-import com.traderbuddy.config.JwtService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

@@ -11,14 +11,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.traderbuddy.auth.requestTypes.AuthenticationRequest;
-import com.traderbuddy.auth.requestTypes.RegisterRequest;
-import com.traderbuddy.auth.responseTypes.AuthenticationResponse;
+import com.traderbuddy.auth.config.JwtAuthenticationFilter;
+import com.traderbuddy.auth.config.JwtService;
+import com.traderbuddy.auth.dto.request.AuthenticationRequest;
+import com.traderbuddy.auth.dto.request.RegisterRequest;
+import com.traderbuddy.auth.dto.response.AuthenticationResponse;
 import com.traderbuddy.auth.user.Role;
 import com.traderbuddy.auth.user.User;
 import com.traderbuddy.auth.user.UserRepository;
-import com.traderbuddy.config.JwtAuthenticationFilter;
-import com.traderbuddy.config.JwtService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,8 +33,8 @@ public class AuthenticationService {
 	public AuthenticationResponse register(RegisterRequest request) {
 		var user=User
 				.builder()
-				.firstname(request.getFirstname())
-				.lastname(request.getLastname())
+				.firstname(request.getFirstName())
+				.lastname(request.getLastName())
 				.email(request.getEmail())
 				.password(passwordEncoder.encode(request.getPassword()))
 				.role(Role.USER)

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.traderbuddy.auth.requestTypes.AuthenticationRequest;
+import com.traderbuddy.auth.dto.request.AuthenticationRequest;
 import com.traderbuddy.auth.user.User;
 import com.traderbuddy.auth.user.UserRepository;
 

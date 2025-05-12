@@ -1,4 +1,4 @@
-package com.traderbuddy.config;
+package com.traderbuddy.auth.config;
 
 import java.util.List;
 
