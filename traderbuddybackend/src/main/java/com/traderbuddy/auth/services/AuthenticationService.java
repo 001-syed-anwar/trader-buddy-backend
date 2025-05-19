@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.traderbuddy.auth.config.JwtAuthenticationFilter;
-import com.traderbuddy.auth.config.JwtService;
 import com.traderbuddy.auth.dto.request.AuthenticationRequest;
 import com.traderbuddy.auth.dto.request.RegisterRequest;
 import com.traderbuddy.auth.dto.response.AuthenticationResponse;

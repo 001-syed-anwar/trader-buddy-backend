@@ -6,10 +6,10 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-@Configuration
-@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-
+//@Configuration
+//@EnableWebSocketMessageBroker
+public class WebSocketConfig{// implements WebSocketMessageBrokerConfigurer {
+	/*
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic"); // Enables a simple in-memory broker
@@ -21,5 +21,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws")
                 .setAllowedOrigins("http://localhost:3000") // React app origin
                 .withSockJS(); // Enables SockJS fallback options
-    }
+    } */
 }

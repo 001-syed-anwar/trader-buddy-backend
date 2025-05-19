@@ -1,4 +1,4 @@
-package com.traderbuddy.dto.request;
+package com.traderbuddy.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class CreateWorkpaceRequest {
+public class UpdateWorkspaceResponse {
+	private Long id;
 	private String name;
 }

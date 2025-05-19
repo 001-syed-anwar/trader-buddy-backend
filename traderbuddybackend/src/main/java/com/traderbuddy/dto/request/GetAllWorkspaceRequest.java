@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class CreateWorkpaceRequest {
-	private String name;
+public class GetAllWorkspaceRequest {
+	private Long userId;
 }

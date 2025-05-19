@@ -1,4 +1,4 @@
-package com.traderbuddy.dto.request;
+package com.traderbuddy.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class CreateWorkpaceRequest {
+public class GetWorkspaceResponse {
+	private Long id;
+	private Long userId;
 	private String name;
+	private String joinCode;
 }

@@ -10,19 +10,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//@SuppressWarnings("serial")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Builder
-@Table(name = "workspace", indexes = { @Index(name = "idx_workspace_user_id", columnList = "userId") })
-public class Workspace {
+@Table(name = "channel", indexes = { @Index(name = "idx_member_workspace_id", columnList = "workspaceId") })
+public class Channel {
 	@Id
 	@GeneratedValue
 	private Long id;
-	// foreign key user id
-	private Long userId;
 	private String name;
-	private String joinCode;
+	private Long workspaceId;
 }

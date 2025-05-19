@@ -1,4 +1,4 @@
-package com.traderbuddy.auth.config;
+package com.traderbuddy.auth.services;
 
 import java.security.Key;
 import java.util.Date;
@@ -38,14 +38,14 @@ public class JwtService {
 
 	public String generateToken(UserDetails userDetails) {
 		return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
 				.signWith(getSignInKey(), SignatureAlgorithm.HS256).compact();
 	}
 
 	public String generateToken(Map<String, Object> customClaims, UserDetails userDetails) {
 		return Jwts.builder().setClaims(customClaims).setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
 				.signWith(getSignInKey(), SignatureAlgorithm.HS256).compact();
 	}
 

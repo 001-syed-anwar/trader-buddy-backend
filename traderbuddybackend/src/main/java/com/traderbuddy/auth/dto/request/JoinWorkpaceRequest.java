@@ -1,4 +1,4 @@
-package com.traderbuddy.dto.request;
+package com.traderbuddy.auth.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class CreateWorkpaceRequest {
-	private String name;
+@Data
+public class JoinWorkpaceRequest {
+	private Long id;
+	private String joinCode;
 }

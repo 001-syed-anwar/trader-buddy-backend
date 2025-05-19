@@ -27,7 +27,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+//@Component
 @Slf4j
 public class PostgresNotificationListener {
 
@@ -115,10 +115,10 @@ public class PostgresNotificationListener {
 	private void handleNotification(PGNotification notification) {
 		String payload = notification.getParameter();
 		String tableName = payload.substring(0, payload.indexOf('|'));
-		log.info("got the notification : {}" ,payload);
+		log.info("got the notification : {}", payload);
 		switch (tableName) {
 		case "workspace": {
-			messagingTemplate.convertAndSend("/topic/updates", workspaceRepository.findAll());
+			messagingTemplate.convertAndSend("/topic/tableUpdates/workspace", workspaceRepository.findAll());
 			break;
 		}
 		}

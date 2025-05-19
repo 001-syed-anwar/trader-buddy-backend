@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.traderbuddy.auth.services.JwtService;
 import com.traderbuddy.auth.user.Role;
 import com.traderbuddy.auth.user.User;
 import com.traderbuddy.auth.user.UserRepository;

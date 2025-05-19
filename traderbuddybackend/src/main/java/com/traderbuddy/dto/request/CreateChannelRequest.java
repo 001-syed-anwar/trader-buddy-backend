@@ -5,10 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class CreateWorkpaceRequest {
+public class CreateChannelRequest {
 	private String name;
+	private Long workspaceId;
 }
