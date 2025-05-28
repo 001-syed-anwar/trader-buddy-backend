@@ -30,7 +30,7 @@ public class SecurityConfig {
                         .disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/v1/auth/**","/api/v1/oauth2/**")
+                        .requestMatchers("/api/v1/auth/**","/api/v1/oauth2/**","/uploads/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

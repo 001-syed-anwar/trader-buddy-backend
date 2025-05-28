@@ -15,15 +15,10 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Messages extends BaseAuditingEntity{
+public class Reaction {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String body;
-	private String imagePath;
-	private Long memberId;
-	private Long channelId;
-	private Long workspaceId;
-	private Long parentMessageId;
-	// TODO DirectMessageId;
+	private Long workspaceId,messageId,memberId;
+	private String value;
 }

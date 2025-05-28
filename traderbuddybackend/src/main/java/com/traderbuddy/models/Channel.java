@@ -6,17 +6,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
-@Builder
+@SuperBuilder
+@EqualsAndHashCode(callSuper=false)
 @Table(name = "channel", indexes = { @Index(name = "idx_member_workspace_id", columnList = "workspaceId") })
-public class Channel {
+public class Channel extends BaseAuditingEntity{
 	@Id
 	@GeneratedValue
 	private Long id;

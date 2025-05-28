@@ -9,11 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class SendMessageRequest {
+public class EditMessageRequest {
 	private String body;
 	private String image;
-	private Long channelId;
-	private Long workspaceId;
-	private Long parentMessageId;
-	private Long dmId;
 }

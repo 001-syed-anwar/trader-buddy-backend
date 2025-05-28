@@ -79,7 +79,9 @@ public class ChannelService {
 		// ADMIN required?
 		Member member = memberRepository.findByUserIdAndWorkspaceId(userId, channel.getWorkspaceId())
 				.orElseThrow(() -> new IllegalAccessException("User is not the admin of the workspace"));
-		GetChannelResponse response = GetChannelResponse.builder().workspaceId(channel.getWorkspaceId())
+		GetChannelResponse response = GetChannelResponse.builder()
+				.createdAt(channel.getCreatedAt())
+				.workspaceId(channel.getWorkspaceId())
 				.name(channel.getName()).build();
 		return response;
 	}

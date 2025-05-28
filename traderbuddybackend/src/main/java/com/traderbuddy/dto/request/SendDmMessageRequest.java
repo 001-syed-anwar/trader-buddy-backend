@@ -5,15 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Data
-public class SendMessageRequest {
+public final class SendDmMessageRequest {
 	private String body;
 	private String image;
-	private Long channelId;
+	private Long memberOne;
+	private Long memberTwo;
 	private Long workspaceId;
 	private Long parentMessageId;
-	private Long dmId;
 }

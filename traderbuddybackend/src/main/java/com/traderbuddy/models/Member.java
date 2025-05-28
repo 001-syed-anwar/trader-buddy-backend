@@ -37,4 +37,5 @@ public class Member {
 	private String firstname;
 	private String lastname;
 	private String profileImg;
+	private String email;
 }

@@ -1,19 +1,18 @@
 package com.traderbuddy.dto.response;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Builder
-public class GetChannelResponse {
-	private Long id;
-	private String name;
-	private Long workspaceId;
-	private LocalDateTime createdAt;
+public class ReactionResponse {
+	private String value;
+	private Integer count;
+	private List<Long> memberIds;
 }

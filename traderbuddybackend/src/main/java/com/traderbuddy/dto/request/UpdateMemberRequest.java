@@ -1,19 +1,18 @@
 package com.traderbuddy.dto.request;
 
+import com.traderbuddy.auth.user.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Data
-public class SendMessageRequest {
-	private String body;
-	private String image;
-	private Long channelId;
+public class UpdateMemberRequest {
+	private Long id;
 	private Long workspaceId;
-	private Long parentMessageId;
-	private Long dmId;
+	private Role role;
 }

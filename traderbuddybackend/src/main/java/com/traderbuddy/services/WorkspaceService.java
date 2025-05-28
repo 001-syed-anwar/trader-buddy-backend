@@ -25,6 +25,8 @@ import com.traderbuddy.repositories.ChannelRepository;
 import com.traderbuddy.repositories.MemberRepository;
 import com.traderbuddy.repositories.WorkspaceRepository;
 import com.traderbuddy.utils.HashGenerator;
+import com.traderbuddy.websocket.config.MessagesNotificationSender;
+import com.traderbuddy.websocket.config.Notification;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +38,7 @@ public class WorkspaceService {
 	private final UserRepository userRepository;
 	private final MemberRepository memberRepository;
 	private final JwtService jwtService;
+	private final MessagesNotificationSender notificationSender;
 
 	public CreateWorkpaceResponse create(CreateWorkpaceRequest request, String token) {
 		User user = userRepository.findByEmail(jwtService.getUsername(token))
@@ -51,11 +54,15 @@ public class WorkspaceService {
 		saved.setJoinCode(joinCode);
 		workspaceRepository.save(saved);
 		Member member = Member.builder().firstname(firstname).lastname(lastname).profileImg(profileImg).userId(userId)
-				.workspaceId(saved.getId()).role(Role.ADMIN).build();
+				.email(user.getEmail()).workspaceId(saved.getId()).role(Role.ADMIN).build();
 		memberRepository.save(member);
 		Channel generalChannel = Channel.builder().name("General").workspaceId(saved.getId()).build();
 		channelRepository.save(generalChannel);
 		CreateWorkpaceResponse response = CreateWorkpaceResponse.builder().id(saved.getId()).build();
+
+		Notification notification = Notification.builder().content("Workspace Update").build();
+		String destination = "/topic/workspacesUpdates";
+		notificationSender.send(notification, destination);
 		return response;
 	}
 
@@ -79,15 +86,15 @@ public class WorkspaceService {
 		Workspace workspace = workspaceRepository.findById(id).orElse(null);
 		if (workspace == null || !workspace.getJoinCode().equals(joinCode))
 			throw new IllegalArgumentException("no such workspace or the joincode has expired");
-		
-		if(memberRepository.findByUserIdAndWorkspaceId(userId, id).isPresent())
+
+		if (memberRepository.findByUserIdAndWorkspaceId(userId, id).isPresent())
 			throw new IllegalArgumentException("Already an active member of the workspace!");
-		
+
 		String firstname = user.getFirstname();
 		String lastname = user.getLastname();
 		String profileImg = user.getProfileImg();
 		Member member = Member.builder().userId(userId).workspaceId(id).firstname(firstname).lastname(lastname)
-				.profileImg(profileImg).role(Role.USER).build();
+				.profileImg(profileImg).email(user.getEmail()).role(Role.USER).build();
 		memberRepository.save(member);
 
 	}
