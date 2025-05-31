@@ -52,7 +52,7 @@ public class MessageService {
 	private final ReactionRepository reactionRepository;
 	private final JwtService jwtService;
 	private final MessagesNotificationSender notificationSender;
-
+ 
 	public List<MessageResponse> getMessages(String cursor, int limit, Long channelId, Long parentMessageId, Long dmId,
 			String token) {
 		String email = jwtService.getUsername(token);
@@ -104,13 +104,13 @@ public class MessageService {
 						.parentMessageId(message.getParentMessageId()).workspaceId(message.getWorkspaceId())
 						.createdAt(message.getCreatedAt()).updatedAt(message.getUpdatedAt()).build();
 				
-				UserDto userDto =UserDto.builder().firstname("Unknown").lastname("User").build();
+				UserDto userDto =UserDto.builder().firstname("Deleted").lastname("User").build();
 				if(messageUser!=null) userDto=UserDto.builder().email(messageUser.getEmail()).firstname(messageUser.getFirstname())
 						.id(messageUser.getId()).lastname(messageUser.getLastname()).lastSeen(messageUser.getLastSeen())
 						.password(messageUser.getPassword()).profileImg(messageUser.getProfileImg())
 						.role(messageUser.getRole()).build();
 				
-				MemberDto memberDto = MemberDto.builder().firstname("Unknown").lastname("User").build();
+				MemberDto memberDto = MemberDto.builder().firstname("Deleted").lastname("User").build();
 				if(messageMember!=null) memberDto=MemberDto.builder().firstname(messageMember.getFirstname())
 						.id(messageMember.getId()).lastname(messageMember.getLastname())
 						.profileImg(messageMember.getProfileImg()).role(messageMember.getRole())
@@ -174,7 +174,10 @@ public class MessageService {
 				.reactions(reactions).build();
 		return response;
 	}
-
+	
+	
+	// multiple repository save calls
+	@Transactional
 	public void sendMessage(SendMessageRequest request, String token) throws IllegalAccessException {
 		Long userId = userRepository.findByEmail(jwtService.getUsername(token))
 				.orElseThrow(() -> new UsernameNotFoundException("inavlid token, username is not found in db")).getId();
@@ -198,7 +201,7 @@ public class MessageService {
 				.channelId(request.getChannelId()).workspaceId(request.getWorkspaceId()).memberId(member.getId())
 				.parentMessageId(request.getParentMessageId()).directMessageId(dmId).build();
 		messageRepository.save(message);
-		Notification notification = Notification.builder().content("Channel Message").build();
+		Notification notification = Notification.builder().content("Message Update").build();
 		String destination = "/topic/" + message.getWorkspaceId();
 		notificationSender.send(notification, destination);
 	}

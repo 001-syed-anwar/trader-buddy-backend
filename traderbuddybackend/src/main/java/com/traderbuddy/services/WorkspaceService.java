@@ -40,6 +40,7 @@ public class WorkspaceService {
 	private final JwtService jwtService;
 	private final MessagesNotificationSender notificationSender;
 
+	@Transactional
 	public CreateWorkpaceResponse create(CreateWorkpaceRequest request, String token) {
 		User user = userRepository.findByEmail(jwtService.getUsername(token))
 				.orElseThrow(() -> new UsernameNotFoundException("inavlid token, username is not found in db"));
@@ -47,12 +48,9 @@ public class WorkspaceService {
 		String firstname = user.getFirstname();
 		String lastname = user.getLastname();
 		String profileImg = user.getProfileImg();
-		Workspace workpace = Workspace.builder().name(request.getName()).userId(userId).build();
+		String joinCode = HashGenerator.generateJoinCode( userId,Instant.now().toString());
+		Workspace workpace = Workspace.builder().name(request.getName()).joinCode(joinCode).build();
 		Workspace saved = workspaceRepository.save(workpace);
-		String joinCode = HashGenerator.generateJoinCode(saved.getId(), saved.getUserId(), saved.getName(),
-				Instant.now().toString());
-		saved.setJoinCode(joinCode);
-		workspaceRepository.save(saved);
 		Member member = Member.builder().firstname(firstname).lastname(lastname).profileImg(profileImg).userId(userId)
 				.email(user.getEmail()).workspaceId(saved.getId()).role(Role.ADMIN).build();
 		memberRepository.save(member);
@@ -61,7 +59,7 @@ public class WorkspaceService {
 		CreateWorkpaceResponse response = CreateWorkpaceResponse.builder().id(saved.getId()).build();
 
 		Notification notification = Notification.builder().content("Workspace Update").build();
-		String destination = "/topic/workspacesUpdates";
+		String destination = "/topic/user/"+userId;
 		notificationSender.send(notification, destination);
 		return response;
 	}
@@ -77,6 +75,10 @@ public class WorkspaceService {
 		String newJoinCode = HashGenerator.generateJoinCode(id, userId, workspace.getName(), Instant.now().toString());
 		workspace.setJoinCode(newJoinCode);
 		workspaceRepository.save(workspace);
+		
+		Notification notification = Notification.builder().content("Code Update").build();
+		String destination = "/topic/"+workspace.getId();
+		notificationSender.send(notification, destination);
 	}
 
 	public void addPeople(Long id, String joinCode, String token) {
@@ -96,7 +98,13 @@ public class WorkspaceService {
 		Member member = Member.builder().userId(userId).workspaceId(id).firstname(firstname).lastname(lastname)
 				.profileImg(profileImg).email(user.getEmail()).role(Role.USER).build();
 		memberRepository.save(member);
-
+		
+		Notification notification1 = Notification.builder().content("Member Joined |"+member.getFirstname()+" "+member.getLastname()).build();
+		String destination1 = "/topic/"+workspace.getId();
+		notificationSender.send(notification1, destination1);
+		Notification notification2 = Notification.builder().content("Workspace Update").build();
+		String destination2 = "/topic/user/"+userId;
+		notificationSender.send(notification2, destination2);
 	}
 
 	public GetAllWorkspacesResponse getAllWorkspace(String token) {
@@ -114,7 +122,7 @@ public class WorkspaceService {
 				.orElseThrow(() -> new IllegalArgumentException(
 						"The user is not associated with the workspace or the workspace does not exist anymore."));
 		return GetWorkspaceResponse.builder().id(workspace.getId()).name(workspace.getName())
-				.userId(workspace.getUserId()).joinCode(workspace.getJoinCode()).build();
+				.joinCode(workspace.getJoinCode()).build();
 	}
 
 	@Transactional
@@ -127,8 +135,14 @@ public class WorkspaceService {
 		memberRepository.deleteByWorkspaceId(id);
 		channelRepository.deleteAllByWorkspaceId(id);
 		workspaceRepository.deleteById(id);
+		
+		// All members of the workspace
+		Notification notification = Notification.builder().content("Workspace Delete").build();
+		String destination = "/topic/"+id;
+		notificationSender.send(notification, destination);
 	}
 
+	@Transactional
 	public UpdateWorkspaceResponse update(Long id, UpdateWorkspaceRequest request, String token)
 			throws IllegalAccessException {
 		Long userId = userRepository.findByEmail(jwtService.getUsername(token))
@@ -140,6 +154,11 @@ public class WorkspaceService {
 				.orElseThrow(() -> new IllegalArgumentException("workspace id doesn't exist"));
 		workspace.setName(request.getName());
 		workspaceRepository.save(workspace);
+		
+		Notification notification = Notification.builder().content("Workspace Update").build();
+		String destination = "/topic/"+id;
+		notificationSender.send(notification, destination);
+		
 		return UpdateWorkspaceResponse.builder().name(workspace.getName()).id(id).build();
 	}
 

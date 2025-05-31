@@ -3,26 +3,20 @@ package com.traderbuddy.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//@SuppressWarnings("serial")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Builder
-@Table(name = "workspace", indexes = { @Index(name = "idx_workspace_user_id", columnList = "userId") })
 public class Workspace {
 	@Id
 	@GeneratedValue
 	private Long id;
-	// foreign key user id
-	private Long userId;
 	private String name;
 	private String joinCode;
 }

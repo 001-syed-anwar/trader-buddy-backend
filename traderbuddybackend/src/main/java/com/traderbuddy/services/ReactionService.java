@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class ReactionService {
 	private final MemberRepository memberRepository;
 	private final UserRepository userRepository;
-//	private final WorkspaceRepository workspaceRepository;
 	private final ReactionRepository reactionRepository;
 	private final MessageRepository messageRepository;
 	private final JwtService jwtService;
@@ -52,7 +51,7 @@ public class ReactionService {
 			reaction.setValue(request.getValue());
 			reactionRepository.save(reaction);
 		}
-		Notification notification = Notification.builder().content("Channel Message").build();
+		Notification notification = Notification.builder().content("Message Update").build();
 		String destination = "/topic/" + message.getWorkspaceId();
 		notificationSender.send(notification, destination);
 	}

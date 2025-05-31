@@ -18,9 +18,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Entity
 @SuperBuilder
-@EqualsAndHashCode(callSuper=false)
-@Table(name = "channel", indexes = { @Index(name = "idx_member_workspace_id", columnList = "workspaceId") })
-public class Channel extends BaseAuditingEntity{
+@EqualsAndHashCode(callSuper = false)
+@Table(name = "channel", indexes = { @Index(name = "idx_channel_workspace_id", columnList = "workspaceId") })
+public class Channel extends BaseAuditingEntity {
 	@Id
 	@GeneratedValue
 	private Long id;

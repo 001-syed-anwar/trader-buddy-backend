@@ -19,18 +19,15 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Builder
-@Table(	name = "member",
-		indexes = { 
-		@Index(name = "idx_member_user_id", columnList = "userId"),
-		@Index(name = "idx_member_workspace_id", columnList = "workspaceId") 
-		})
+@Table(name = "member", indexes = { @Index(name = "idx_member_user_id", columnList = "userId"),
+		@Index(name = "idx_member_workspace_id", columnList = "workspaceId"),
+		@Index(name = "idx_member_user_workspace", columnList = "userId, workspaceId")
+})
 public class Member {
 	@Id
 	@GeneratedValue
 	private Long id;
-	// foreign key user id
 	private Long userId;
-	// foreign key user id
 	private Long workspaceId;
 	@Enumerated(EnumType.STRING)
 	private Role role;

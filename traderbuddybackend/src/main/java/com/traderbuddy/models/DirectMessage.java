@@ -15,7 +15,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Builder
-@Table(indexes = { @Index(name = "idx_member_pair", columnList = "memberOne, memberTwo", unique = true) })
+@Table(name = "direct_message", indexes = {
+		@Index(name = "idx_member_pair", columnList = "memberOne, memberTwo", unique = true),
+		@Index(name = "idx_direct_message_workspace_id", columnList = "workspaceId") })
 public class DirectMessage {
 
 	@Id

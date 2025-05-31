@@ -13,8 +13,7 @@ import com.traderbuddy.models.Workspace;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-	List<Member> findAllByWorkspaceId(Long userId);
-	List<Member> findAllByUserId(Long userId);
+	List<Member> findAllByWorkspaceId(Long workspaceId);
 
 	@Query("SELECT m.workspaceId FROM Member m WHERE m.userId = :userId")
 	List<Long> findWorkspaceIdsByUserId(@Param("userId") Long userId);

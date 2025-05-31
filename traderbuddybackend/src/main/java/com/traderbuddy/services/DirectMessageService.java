@@ -30,9 +30,12 @@ public class DirectMessageService {
 		Member member2 = memberRepository.getReferenceById(memberTwo);
 		if (member2.getWorkspaceId() != workspaceId)
 			throw new UsernameNotFoundException("receiver is not part of the workspace");
-		DirectMessage dm = directMessageRepository.findByMemberOneAndMemberTwo(member1.getId(), member2.getId())
+
+		Long first = Math.min(member1.getId(), member2.getId());
+		Long second = Math.max(member1.getId(), member2.getId());
+		DirectMessage dm = directMessageRepository.findByMemberPair(first, second)
 				.orElseGet(() -> {
-					DirectMessage create = DirectMessage.builder().memberOne(member1.getId()).memberTwo(member2.getId())
+					DirectMessage create = DirectMessage.builder().memberOne(first).memberTwo(second)
 							.workspaceId(workspaceId).build();
 					return directMessageRepository.save(create);
 				});

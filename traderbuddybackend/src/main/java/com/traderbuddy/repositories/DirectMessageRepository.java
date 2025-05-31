@@ -13,4 +13,7 @@ import com.traderbuddy.models.DirectMessage;
 public interface DirectMessageRepository extends JpaRepository<DirectMessage, Long> {
 	@Query("SELECT dm FROM DirectMessage dm WHERE (dm.memberOne = :memberOne AND dm.memberTwo = :memberTwo) OR (dm.memberOne = :memberTwo AND dm.memberTwo = :memberOne)")
 	Optional<DirectMessage> findByMemberOneAndMemberTwo(@Param("memberOne") Long memberOne, @Param("memberTwo") Long memberTwo);
+	
+	@Query("SELECT dm FROM DirectMessage dm WHERE dm.memberOne = :memberOne AND dm.memberTwo = :memberTwo")
+	Optional<DirectMessage> findByMemberPair(@Param("memberOne") Long memberOne, @Param("memberTwo") Long memberTwo);
 }

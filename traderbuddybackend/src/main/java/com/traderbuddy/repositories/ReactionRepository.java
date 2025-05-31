@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.traderbuddy.auth.user.User;
 import com.traderbuddy.models.Reaction;
 
 @Repository
@@ -17,5 +16,4 @@ public interface ReactionRepository extends JpaRepository<Reaction, Long> {
 	List<Reaction> findAllByMessageId(Long messageId);
 
 	Optional<Reaction> findByMessageIdAndMemberId(Long messageId, Long id);
-
 }
