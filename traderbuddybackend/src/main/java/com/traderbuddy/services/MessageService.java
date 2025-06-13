@@ -220,7 +220,7 @@ public class MessageService {
 			}
 		}
 
-		Notification notification = Notification.builder().content("Channel Message").build();
+		Notification notification = Notification.builder().content("Message Update").build();
 		String destination = "/topic/" + message.getWorkspaceId();
 		notificationSender.send(notification, destination);
 	}
@@ -237,7 +237,7 @@ public class MessageService {
 		message.setImagePath(request.getImage());
 		messageRepository.save(message);
 
-		Notification notification = Notification.builder().content("Channel Message").build();
+		Notification notification = Notification.builder().content("Message Update").build();
 		String destination = "/topic/" + message.getWorkspaceId();
 		notificationSender.send(notification, destination);
 	}
